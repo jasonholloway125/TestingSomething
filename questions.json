@@ -1,0 +1,29 @@
+[
+  {
+    "question": "What is the capital of France?",
+    "answers": [
+      { "text": "Berlin", "correct": false },
+      { "text": "Madrid", "correct": false },
+      { "text": "Paris", "correct": true },
+      { "text": "Rome", "correct": false }
+    ]
+  },
+  {
+    "question": "Which language runs in a web browser?",
+    "answers": [
+      { "text": "Java", "correct": false },
+      { "text": "C", "correct": false },
+      { "text": "Python", "correct": false },
+      { "text": "JavaScript", "correct": true }
+    ]
+  },
+  {
+    "question": "Who developed the theory of relativity?",
+    "answers": [
+      { "text": "Isaac Newton", "correct": false },
+      { "text": "Albert Einstein", "correct": true },
+      { "text": "Galileo Galilei", "correct": false },
+      { "text": "Nikola Tesla", "correct": false }
+    ]
+  }
+]
