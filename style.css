@@ -54,6 +54,8 @@ button:hover {
   cursor: pointer;
   background-color: #eee;
   transition: background-color 0.3s ease;
+  color: black;
+  font-weight: bold;
 }
 
 #answers button:disabled {

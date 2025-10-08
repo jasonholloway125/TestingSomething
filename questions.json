@@ -1,11 +1,11 @@
 [
   {
-    "question": "What is the capital of France?",
+    "question": "\"Adversary probes victim infrastructure via network traffic, as opposed to other forms of reconnaissance that do not involve direct interaction\"",
     "answers": [
-      { "text": "Berlin", "correct": false },
-      { "text": "Madrid", "correct": false },
-      { "text": "Paris", "correct": true },
-      { "text": "Rome", "correct": false }
+      { "text": "Gather Victim Org Information", "correct": false },
+      { "text": "Active Scanning", "correct": false },
+      { "text": "Search Open Websites", "correct": true },
+      { "text": "Search Victim Owned Websites", "correct": false }
     ]
   },
   {
