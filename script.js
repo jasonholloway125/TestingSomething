@@ -5,7 +5,6 @@ let score = 0;
 async function loadQuestions() {
   const res = await fetch('questions.json');
   questions = await res.json();
-  console.log(questions);
   showQuestion();
 }
 
@@ -20,28 +19,37 @@ function showQuestion() {
   const q = questions[currentQuestionIndex];
   questionElement.textContent = q.question;
 
-  q.answers.forEach((answer, index) => {
+  q.answers.forEach((answer) => {
     const li = document.createElement('li');
     const btn = document.createElement('button');
     btn.textContent = answer.text;
-    btn.onclick = () => selectAnswer(answer.correct, btn);
+    btn.dataset.correct = answer.correct;
+    btn.addEventListener('click', () => selectAnswer(btn));
     li.appendChild(btn);
     answersElement.appendChild(li);
   });
 }
 
-function selectAnswer(correct, btn) {
+function selectAnswer(selectedBtn) {
+  const nextBtn = document.getElementById('next-btn');
   const buttons = document.querySelectorAll('#answers button');
-  buttons.forEach(b => b.disabled = true);
+  const correct = selectedBtn.dataset.correct === "true";
 
-  if (correct) {
-    btn.style.backgroundColor = '#4CAF50';
-    score++;
-  } else {
-    btn.style.backgroundColor = '#f44336';
-  }
+  // Highlight correct and incorrect answers
+  buttons.forEach((button) => {
+    const isCorrect = button.dataset.correct === "true";
+    button.disabled = true;
+    if (isCorrect) {
+      button.style.backgroundColor = "#4CAF50"; // green
+    } else if (button === selectedBtn && !isCorrect) {
+      button.style.backgroundColor = "#f44336"; // red
+    } else {
+      button.style.backgroundColor = "#ddd"; // grey others
+    }
+  });
 
-  document.getElementById('next-btn').disabled = false;
+  if (correct) score++;
+  nextBtn.disabled = false;
 }
 
 document.getElementById('next-btn').addEventListener('click', () => {

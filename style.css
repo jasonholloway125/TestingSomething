@@ -45,3 +45,18 @@ button:hover {
 .hidden {
   display: none;
 }
+
+#answers button {
+  width: 100%;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #eee;
+  transition: background-color 0.3s ease;
+}
+
+#answers button:disabled {
+  cursor: not-allowed;
+  opacity: 0.9;
+}
