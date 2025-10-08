@@ -5,7 +5,19 @@ let score = 0;
 async function loadQuestions() {
   const res = await fetch('questions.json');
   questions = await res.json();
+
+  // Shuffle questions before starting
+  shuffleArray(questions);
+
   showQuestion();
+}
+
+// Fisher-Yates shuffle
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
 }
 
 function showQuestion() {
@@ -19,7 +31,11 @@ function showQuestion() {
   const q = questions[currentQuestionIndex];
   questionElement.textContent = q.question;
 
-  q.answers.forEach((answer) => {
+  // Shuffle answer options too (optional but recommended)
+  const shuffledAnswers = [...q.answers];
+  shuffleArray(shuffledAnswers);
+
+  shuffledAnswers.forEach((answer) => {
     const li = document.createElement('li');
     const btn = document.createElement('button');
     btn.textContent = answer.text;
@@ -44,7 +60,7 @@ function selectAnswer(selectedBtn) {
     } else if (button === selectedBtn && !isCorrect) {
       button.style.backgroundColor = "#f44336"; // red
     } else {
-      button.style.backgroundColor = "#ddd"; // grey others
+      button.style.backgroundColor = "#ddd"; // grey
     }
   });
 
@@ -70,6 +86,7 @@ function showResult() {
 document.getElementById('restart-btn').addEventListener('click', () => {
   score = 0;
   currentQuestionIndex = 0;
+  shuffleArray(questions); // re-shuffle for new run
   document.getElementById('quiz').classList.remove('hidden');
   document.getElementById('result').classList.add('hidden');
   showQuestion();
