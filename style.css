@@ -12,7 +12,8 @@ html, body {
 
 /* Centered container */
 .quiz-container {
-  background: white;
+  background: #1f1f1f;
+  color: #cccccc;
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -24,6 +25,7 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 /* Question text with truncation */
