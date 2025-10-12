@@ -25,7 +25,7 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 /* Question text with truncation */
@@ -47,19 +47,20 @@ html, body {
 #question.expanded {
   max-height: none;
 }
-
+MITRE ATT&CL
 #expand-btn {
   background: none;
   border: none;
-  color: #0078d4;
+  color: #1e739e;
   cursor: pointer;
   font-size: 0.9rem;
   text-decoration: underline;
   margin-bottom: 1rem;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 #expand-btn:hover {
-  color: #005ea1;
+  color: #155a7c;
 }
 
 /* Answers list */
@@ -76,14 +77,16 @@ html, body {
   width: 100%;
   padding: 0.6rem;
   border: none;
-  border-radius: 6px;
-  background-color: #eee;
+  border-radius: 0px;
+  background-color: #cccccc;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-family: 'Courier New', Courier, monospace;
+  color:#1f1f1f
 }
 
 #answers button:hover:not(:disabled) {
-  background-color: #ddd;
+  background-color: #b3b3b3;
 }
 
 #answers button:disabled {
@@ -93,17 +96,18 @@ html, body {
 
 /* Navigation buttons */
 button#next-btn, button#restart-btn {
-  background: #0078d4;
-  color: white;
+  background: #1e739e;
+  color: #cccccc;
   border: none;
   padding: 0.6rem 1.2rem;
-  border-radius: 6px;
+  border-radius: 0px;
   cursor: pointer;
   margin-top: 1rem;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 button#next-btn:hover, button#restart-btn:hover {
-  background: #005ea1;
+  background: #1e739e;
 }
 
 .hidden {
