@@ -79,27 +79,41 @@ function showQuestion() {
   const qObj = questions[currentQuestionIndex];
   if (!qObj) return showResult();
 
-  // Show the full definition as question text
+  // Reset styles
+  questionElement.style.overflow = 'hidden';
+  questionElement.style.display = '-webkit-box';
+  questionElement.style.webkitBoxOrient = 'vertical';
+  questionElement.style.webkitLineClamp = '3';
+  questionElement.style.maxHeight = '4.5em';
   questionElement.textContent = qObj.ques;
 
-  // Enable expand/collapse if long
-  questionElement.classList.remove('expanded');
-  setTimeout(() => {
+  // Wait for rendering before measuring
+  requestAnimationFrame(() => {
     if (questionElement.scrollHeight > questionElement.clientHeight + 5) {
       expandBtn.classList.remove('hidden');
       expandBtn.textContent = 'Show more';
     } else {
       expandBtn.classList.add('hidden');
     }
-  }, 50);
+  });
 
+  let expanded = false;
   expandBtn.onclick = () => {
-    if (questionElement.classList.contains('expanded')) {
-      questionElement.classList.remove('expanded');
-      expandBtn.textContent = 'Show more';
-    } else {
-      questionElement.classList.add('expanded');
+    expanded = !expanded;
+    if (expanded) {
+      // Expand fully
+      questionElement.style.overflow = 'visible';
+      questionElement.style.display = 'block';
+      questionElement.style.webkitLineClamp = 'unset';
+      questionElement.style.maxHeight = 'none';
       expandBtn.textContent = 'Show less';
+    } else {
+      // Collapse again
+      questionElement.style.overflow = 'hidden';
+      questionElement.style.display = '-webkit-box';
+      questionElement.style.webkitLineClamp = '3';
+      questionElement.style.maxHeight = '4.5em';
+      expandBtn.textContent = 'Show more';
     }
   };
 
@@ -115,6 +129,7 @@ function showQuestion() {
     answersElement.appendChild(li);
   });
 }
+
 
 function selectAnswer(selectedBtn) {
   const nextBtn = document.getElementById('next-btn');
