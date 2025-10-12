@@ -7,6 +7,14 @@ body {
   height: 100vh;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; 
+  touch-action: none; 
+}
+
 .quiz-container {
   background: white;
   padding: 2rem;
