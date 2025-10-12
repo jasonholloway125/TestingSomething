@@ -1,57 +1,69 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f2f2f2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
+/* Prevent page scrolling on mobile */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden; 
-  touch-action: none; 
+  overflow: hidden;
+  touch-action: none;
+  background: #f2f2f2;
+  font-family: Arial, sans-serif;
 }
 
+/* Centered container */
 .quiz-container {
   background: white;
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  width: 320px;
+  width: 90%;
+  max-width: 400px;
   text-align: center;
+  margin: auto;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-h1 {
+/* Question text with truncation */
+#question {
+  position: relative;
+  max-height: 4.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  transition: max-height 0.3s ease;
+  margin-bottom: 0.5rem;
+}
+
+#question.expanded {
+  max-height: none;
+}
+
+#expand-btn {
+  background: none;
+  border: none;
+  color: #0078d4;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: underline;
   margin-bottom: 1rem;
 }
 
+#expand-btn:hover {
+  color: #005ea1;
+}
+
+/* Answers list */
 #answers {
   list-style: none;
   padding: 0;
 }
 
 #answers li {
-  margin: 0.5rem 0;
-}
-
-button {
-  background: #0078d4;
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #005ea1;
-}
-
-.hidden {
-  display: none;
+  margin: 0.4rem 0;
 }
 
 #answers button {
@@ -59,14 +71,45 @@ button:hover {
   padding: 0.6rem;
   border: none;
   border-radius: 6px;
-  cursor: pointer;
   background-color: #eee;
+  cursor: pointer;
   transition: background-color 0.3s ease;
-  color: black;
-  font-weight: bold;
+}
+
+#answers button:hover:not(:disabled) {
+  background-color: #ddd;
 }
 
 #answers button:disabled {
   cursor: not-allowed;
   opacity: 0.9;
+}
+
+/* Explanation text */
+#answer-info {
+  margin-top: 10px;
+  text-align: left;
+  font-size: 0.9rem;
+  max-height: 30vh;
+  overflow-y: auto;
+  touch-action: auto;
+}
+
+/* Navigation buttons */
+button#next-btn, button#restart-btn {
+  background: #0078d4;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+button#next-btn:hover, button#restart-btn:hover {
+  background: #005ea1;
+}
+
+.hidden {
+  display: none;
 }
