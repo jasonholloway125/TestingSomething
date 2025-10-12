@@ -1,4 +1,4 @@
-/* Prevent page scrolling on mobile */
+/* Prevent page scrolling on mobile
 html, body {
   margin: 0;
   padding: 0;
@@ -8,6 +8,7 @@ html, body {
   background: #f2f2f2;
   font-family: Arial, sans-serif;
 }
+*/
 
 /* Centered container */
 .quiz-container {
@@ -28,7 +29,7 @@ html, body {
 /* Question text with truncation */
 #question {
   position: relative;
-  max-height: 4.5em;
+  max-height: 4.5em; /* show about 3 lines */
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -36,6 +37,9 @@ html, body {
   -webkit-box-orient: vertical;
   transition: max-height 0.3s ease;
   margin-bottom: 0.5rem;
+  text-align: left;
+  font-size: 0.95rem;
+  line-height: 1.4em;
 }
 
 #question.expanded {
@@ -83,16 +87,6 @@ html, body {
 #answers button:disabled {
   cursor: not-allowed;
   opacity: 0.9;
-}
-
-/* Explanation text */
-#answer-info {
-  margin-top: 10px;
-  text-align: left;
-  font-size: 0.9rem;
-  max-height: 30vh;
-  overflow-y: auto;
-  touch-action: auto;
 }
 
 /* Navigation buttons */

@@ -1,6 +1,3 @@
-// script.js
-// Quiz uses questions.json and answers.json
-
 const OPTIONS_COUNT = 4;
 
 let questions = [];
@@ -37,39 +34,35 @@ function buildOptionsForQuestion(qObj) {
     const list = answersByCategory[cat];
     if (Array.isArray(list)) {
       list.forEach(item => {
-        if (item && item.name) candidates.push({ name: item.name, desc: item.desc || '' });
+        if (item && item.name) candidates.push({ name: item.name });
       });
     }
   });
 
   // Deduplicate
-  const seen = new Map();
-  candidates.forEach(c => { if (!seen.has(c.name)) seen.set(c.name, c); });
-  candidates = Array.from(seen.values()).filter(c => c.name !== correctName);
+  const seen = new Set();
+  candidates = candidates.filter(c => {
+    if (seen.has(c.name) || c.name === correctName) return false;
+    seen.add(c.name);
+    return true;
+  });
 
   if (candidates.length < OPTIONS_COUNT - 1) {
     Object.keys(answersByCategory).forEach(cat => {
       answersByCategory[cat].forEach(item => {
         if (!seen.has(item.name) && item.name !== correctName) {
-          candidates.push({ name: item.name, desc: item.desc || '' });
-          seen.set(item.name, item);
+          candidates.push({ name: item.name });
+          seen.add(item.name);
         }
       });
     });
   }
 
   shuffleArray(candidates);
-  const chosenWrong = candidates.slice(0, Math.max(0, OPTIONS_COUNT - 1));
+  const chosenWrong = candidates.slice(0, OPTIONS_COUNT - 1);
 
-  // Correct description lookup
-  let correctDesc = '';
-  for (const cat of Object.keys(answersByCategory)) {
-    const found = answersByCategory[cat].find(x => x.name === correctName);
-    if (found) { correctDesc = found.desc || ''; break; }
-  }
-
-  const options = chosenWrong.map(c => ({ text: c.name, correct: false, desc: c.desc || '' }));
-  options.push({ text: correctName, correct: true, desc: correctDesc });
+  const options = chosenWrong.map(c => ({ text: c.name, correct: false }));
+  options.push({ text: correctName, correct: true });
   shuffleArray(options);
   return options;
 }
@@ -79,25 +72,26 @@ function showQuestion() {
   const expandBtn = document.getElementById('expand-btn');
   const answersElement = document.getElementById('answers');
   const nextBtn = document.getElementById('next-btn');
-  const infoEl = document.getElementById('answer-info');
 
   answersElement.innerHTML = '';
-  if (infoEl) infoEl.textContent = '';
   nextBtn.disabled = true;
 
   const qObj = questions[currentQuestionIndex];
   if (!qObj) return showResult();
 
+  // Show the full definition as question text
   questionElement.textContent = qObj.ques;
 
-  // Expand/collapse setup
+  // Enable expand/collapse if long
   questionElement.classList.remove('expanded');
-  if (questionElement.scrollHeight > questionElement.clientHeight + 5) {
-    expandBtn.classList.remove('hidden');
-    expandBtn.textContent = 'Show more';
-  } else {
-    expandBtn.classList.add('hidden');
-  }
+  setTimeout(() => {
+    if (questionElement.scrollHeight > questionElement.clientHeight + 5) {
+      expandBtn.classList.remove('hidden');
+      expandBtn.textContent = 'Show more';
+    } else {
+      expandBtn.classList.add('hidden');
+    }
+  }, 50);
 
   expandBtn.onclick = () => {
     if (questionElement.classList.contains('expanded')) {
@@ -116,7 +110,6 @@ function showQuestion() {
     const btn = document.createElement('button');
     btn.textContent = opt.text;
     btn.dataset.correct = opt.correct ? "true" : "false";
-    btn.dataset.desc = opt.desc || '';
     btn.addEventListener('click', () => selectAnswer(btn));
     li.appendChild(btn);
     answersElement.appendChild(li);
@@ -142,20 +135,6 @@ function selectAnswer(selectedBtn) {
       button.style.color = "#000";
     }
   });
-
-  const infoEl = document.getElementById('answer-info');
-  if (infoEl) {
-    const correctBtn = Array.from(buttons).find(b => b.dataset.correct === "true");
-    infoEl.innerHTML = '';
-    if (correctBtn && correctBtn.dataset.desc) {
-      const pTitle = document.createElement('strong');
-      pTitle.textContent = 'Explanation: ';
-      const pDesc = document.createElement('span');
-      pDesc.textContent = correctBtn.dataset.desc;
-      infoEl.appendChild(pTitle);
-      infoEl.appendChild(pDesc);
-    }
-  }
 
   if (correct) score++;
   nextBtn.disabled = false;
